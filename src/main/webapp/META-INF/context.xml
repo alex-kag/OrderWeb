@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context antiJARLocking="true" path="/orders">
+<Resource
+        name="jdbc/dbOrder"
+        auth="Container"
+        type="javax.sql.DataSource"
+        username="nariad"
+        password="nariad"
+        description="database for Agentstvo"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/nariad?useUnicode=yes&amp;characterEncoding=UTF-8"
+        maxActive="8"
+        maxIdle="4"
+        maxWaitMillis="10000"
+        defaultAutoCommit="true" />
+</Context>
