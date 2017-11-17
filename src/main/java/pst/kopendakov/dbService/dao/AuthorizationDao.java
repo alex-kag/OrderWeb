@@ -1,6 +1,9 @@
 package pst.kopendakov.dbService.dao;
 
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import pst.kopendakov.dbService.hibernate.HibernateUtil;
 import pst.kopendakov.servlets.model.UserRole;
 
 import java.io.IOException;
@@ -14,10 +17,16 @@ import java.sql.SQLException;
  */
 public class AuthorizationDao {
 
+    private Session session = null;
+
     public AuthorizationDao() {
+        session = HibernateUtil.getSessionFactory().openSession();
     }
 
     public UserRole checkAccess(String login, String password) throws IOException {
+
+        session.createQuery("from TblUserEntity")
+
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection connection = null;//DataSource.getInstance().getConnection();
