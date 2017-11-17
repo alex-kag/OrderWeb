@@ -23,16 +23,9 @@ public class HibernateUtil {
             ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.ClientsEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.DealEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.EmployeesEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.LocationEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.ParampropertyEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.PositionsEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.PropertyEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.StreetsEntity.class);
-//            configuration.addAnnotatedClass(me.svetilnik.dbService.hibernate.model.dataSet.ViewdealEntity.class);
-
+            configuration.addAnnotatedClass(pst.kopendakov.dbService.hibernate.models.TblCehEntity.class);
+            configuration.addAnnotatedClass(pst.kopendakov.dbService.hibernate.models.TblUserEntity.class);
+            configuration.addAnnotatedClass(pst.kopendakov.dbService.hibernate.models.TblOneRecordEntity.class);
 
             // builds a session factory from the service registry
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
