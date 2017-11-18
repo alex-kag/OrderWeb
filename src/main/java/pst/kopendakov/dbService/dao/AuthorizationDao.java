@@ -1,11 +1,11 @@
 package pst.kopendakov.dbService.dao;
 
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import pst.kopendakov.dbService.hibernate.HibernateUtil;
+import pst.kopendakov.dbService.hibernate.HibernateUtilFactory;
+import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 import pst.kopendakov.servlets.model.UserRole;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,63 +17,64 @@ import java.sql.SQLException;
  */
 public class AuthorizationDao {
 
-    private Session session = null;
+    private EntityManager entityManager = null;
 
     public AuthorizationDao() {
-        session = HibernateUtil.getSessionFactory().openSession();
+        entityManager = HibernateUtilFactory.getEntityManager();
     }
 
     public UserRole checkAccess(String login, String password) throws IOException {
 
-        session.createQuery("from TblUserEntity")
+//        Query query = session.createQuery(
+//                "select u from TblUserEntity u " +
+//                        "where u.login like :login " +
+//                        "and u.pass like :pass")
+//                .setParameter("login", login);
+        TblUserEntity user = (TblUserEntity) entityManager.createQuery(
+                "select u from TblUserEntity u " +
+                        "where u.login like :login ")
+                .setParameter("login", login)
+                .getSingleResult();
 
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Connection connection = null;//DataSource.getInstance().getConnection();
-        String checkUserSql = "select login, password, role_id from usertable where login = ?";
-        try {
-            ps = connection.prepareStatement(checkUserSql);
-            ps.setString(1, login);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                String role_id = rs.getString("role_id");
-                if(login.equals(rs.getString("login")) && password.equals(rs.getString("password"))){
-                    return role_id.equalsIgnoreCase("admin") ? UserRole.admin : (role_id.equalsIgnoreCase("boss") ? UserRole.boss : UserRole.user);
-                }
+        if (null != user) {
+            String role_id = getRole(user.getIdCeh());
+            if (login.equals(user.getLogin()) && password.equals(user.getPass())) {
+                return role_id.equalsIgnoreCase("admin") ? UserRole.admin : (role_id.equalsIgnoreCase("boss") ? UserRole.boss : UserRole.user);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IOException(e.getMessage());
-        } finally {
-            if (rs != null) try {rs.close();} catch (SQLException e) {e.printStackTrace();}
-            if (ps != null) try {ps.close();} catch (SQLException e) {e.printStackTrace();}
-            try {connection.close();} catch (SQLException e) {e.printStackTrace();}
         }
-
         return null;
     }
 
+    private String getRole(Integer idCeh) {
+        String role = "";
+        switch (idCeh){
+            case 1:role ="boss";break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:role="user";break;
+            case 999:role="admin";break;
+        }
+        return role;
+    }
+
+
     public Long getUserId(String login) throws IOException {
         Long id = -1l;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Connection connection = null;//DataSource.getInstance().getConnection();
-        String getUserIdSql = "select id from usertable where login = ?";
-        try {
-            ps = connection.prepareStatement(getUserIdSql);
-            ps.setString(1, login);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                id = rs.getLong("id");
+
+        TblUserEntity user = (TblUserEntity) entityManager.createQuery(
+                "select u from TblUserEntity u " +
+                        "where u.login like :login ")
+                .setParameter("login", login)
+                .getSingleResult();
+
+            if (null!=user) {
+                id = (long)user.getId();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IOException(e.getMessage());
-        } finally {
-            if (rs != null) try {rs.close();} catch (SQLException e) {e.printStackTrace();}
-            if (ps != null) try {ps.close();} catch (SQLException e) {e.printStackTrace();}
-            try {connection.close();} catch (SQLException e) {e.printStackTrace();}
-        }
         return id;
     }
 }
