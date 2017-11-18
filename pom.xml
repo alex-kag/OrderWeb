@@ -86,6 +86,16 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
+                    <!--<webResources>-->
+                        <!--<resource>-->
+                            <!--<directory>src/main/resources/META-INF </directory>-->
+                            <!--<targetPath>WEB-INF/classes/META-INF</targetPath>-->
+                            <!--<filtering>true</filtering>-->
+                            <!--<includes>-->
+                                <!--<include>**/persistence.xml</include>-->
+                            <!--</includes>-->
+                        <!--</resource>-->
+                    <!--</webResources>-->
                 </configuration>
             </plugin>
         </plugins>
