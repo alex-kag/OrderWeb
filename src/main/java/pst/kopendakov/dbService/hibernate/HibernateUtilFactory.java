@@ -1,15 +1,11 @@
 package pst.kopendakov.dbService.hibernate;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
+import pst.kopendakov.dbService.hibernate.models.TblCehEntity;
 
 public class HibernateUtilFactory {
     private static EntityManagerFactory emf;

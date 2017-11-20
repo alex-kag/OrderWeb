@@ -37,7 +37,7 @@ public class AuthorizationDao {
                 .getSingleResult();
 
         if (null != user) {
-            String role_id = getRole(user.getIdCeh());
+            String role_id = getRole(user.getTblCehEntity().getIdCeh());
             if (login.equals(user.getLogin()) && password.equals(user.getPass())) {
                 return role_id.equalsIgnoreCase("admin") ? UserRole.admin : (role_id.equalsIgnoreCase("boss") ? UserRole.boss : UserRole.user);
             }

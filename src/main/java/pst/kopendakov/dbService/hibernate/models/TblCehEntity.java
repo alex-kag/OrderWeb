@@ -1,18 +1,20 @@
 package pst.kopendakov.dbService.hibernate.models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "tblCeh", schema = "nariad", catalog = "")
+@Table(name = "tblCeh")
 public class TblCehEntity {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "idCeh", nullable = false)
     private int idCeh;
+
+    @Column(name = "CehName", nullable = false, length = 20)
     private String cehName;
 
-    @Basic
-    @Column(name = "idCeh", nullable = false)
     public int getIdCeh() {
         return idCeh;
     }
@@ -21,14 +23,24 @@ public class TblCehEntity {
         this.idCeh = idCeh;
     }
 
-    @Basic
-    @Column(name = "CehName", nullable = false, length = 20)
     public String getCehName() {
         return cehName;
     }
 
     public void setCehName(String cehName) {
         this.cehName = cehName;
+    }
+
+
+    @OneToMany(mappedBy = "tblCehEntity", cascade = CascadeType.ALL)
+    private Set<TblUserEntity> tblUserEntities;
+
+    public Set<TblUserEntity> getTblUserEntities() {
+        return tblUserEntities;
+    }
+
+    public void setTblUserEntities(Set<TblUserEntity> tblUserEntities) {
+        this.tblUserEntities = tblUserEntities;
     }
 
     @Override

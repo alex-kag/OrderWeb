@@ -3,6 +3,8 @@ package pst.kopendakov.servlets.controller.Commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pst.kopendakov.dbService.dao.AuthorizationDao;
+import pst.kopendakov.dbService.dao.impl.UserDaoImpl;
+import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 import pst.kopendakov.servlets.controller.ActionCommand;
 import pst.kopendakov.servlets.controller.PageURL;
 import pst.kopendakov.servlets.model.UserRole;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by b.yacenko on 13.06.2017.
@@ -20,6 +23,10 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        UserDaoImpl userd = new UserDaoImpl();
+
+        List<TblUserEntity> userLis = userd.getAll(0,0);
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         if (login==null || password==null){
