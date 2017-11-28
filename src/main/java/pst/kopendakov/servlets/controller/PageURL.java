@@ -19,4 +19,8 @@ public interface PageURL {
     String EDIT_USER = "/user.jsp";
     String LIST_USER_ACTION = "/WorkTaskController?action=list_users";
     String LIST_USER = "/listUser.jsp";
+    String LIST_ORDER_ACTION = "/WorkTaskController?action=list_orders";
+    String LIST_ORDER_USER = "/listOrderOne.jsp";
+    String LIST_ORDER_BOSS = "/listOrderAll.jsp";
+
 }

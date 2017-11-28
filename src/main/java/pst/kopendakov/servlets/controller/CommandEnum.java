@@ -18,6 +18,9 @@ public enum CommandEnum {
     LIST_USERS {{
         this.command = new ListUsersCommand();
     }},
+    LIST_ORDERS {{
+        this.command = new ListOrdersCommand();
+    }},
 //    DELETE_WORKTASK {{
 //        this.command = new DeleteWorkTaskCommand();
 //    }},

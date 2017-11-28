@@ -13,7 +13,7 @@ public class TblUserEntity extends Model {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    private int id;
+    private long id;
 
     @Column(name = "login", nullable = false, length = 20)
     private String login;
@@ -34,11 +34,11 @@ public class TblUserEntity extends Model {
         this.tblCehEntity = tblCehEntity;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

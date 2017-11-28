@@ -43,6 +43,17 @@ public class TblCehEntity {
         this.tblUserEntities = tblUserEntities;
     }
 
+    @OneToMany(mappedBy = "tblCehEntity", cascade = CascadeType.ALL)
+    private Set<TblOneRecordEntity> tblOneRecordEntities;
+
+    public Set<TblOneRecordEntity> getTblOneRecordEntities() {
+        return tblOneRecordEntities;
+    }
+
+    public void setTblOneRecordEntities(Set<TblOneRecordEntity> tblOneRecordEntities) {
+        this.tblOneRecordEntities= tblOneRecordEntities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

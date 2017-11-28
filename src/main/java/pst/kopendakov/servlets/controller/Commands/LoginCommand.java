@@ -24,9 +24,8 @@ public class LoginCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        UserDaoImpl userd = new UserDaoImpl();
+        UserRole role = null;
 
-        List<TblUserEntity> userLis = userd.getAll(0,0);
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         if (login==null || password==null){
@@ -34,13 +33,20 @@ public class LoginCommand implements ActionCommand {
         }
 
         AuthorizationDao dao = new AuthorizationDao();
-        UserRole role = dao.checkAccess(login, password);
+
+        TblUserEntity tblUserEntity = dao.checkAccess(login, password);
+
+        if(null!=tblUserEntity){
+            role = dao.getRole(tblUserEntity.getTblCehEntity().getIdCeh());
+        }
         if (role!=null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", login);
             session.setAttribute("user_id", dao.getUserId(login));
             session.setAttribute("role", role);
             session.setMaxInactiveInterval(30 * 60);
+            //добавлено мной
+            session.setAttribute("userCeh",tblUserEntity.getTblCehEntity().getCehName());
             LOGGER.info(String.format("Login successfull: login = %s, role: %s", login, session.getAttribute("role")));
             return PageURL.LIST_WORKTASK_ACTION;
         } else {

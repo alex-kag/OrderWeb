@@ -7,9 +7,9 @@
     <form name="loginForm" method="POST" action="WorkTaskController">
     <input type = "hidden" name="action" value="login"/>
         Login:<br/>
-        <input type="text" name="login" value=""/>
+        <input type="text" name="login" value="al"/>
         <br/>Password:<br/>
-        <input type="password" name="password" value=""/>
+        <input type="password" name="password" value="ap"/>
         <br/>
         <br/>
         <input type="submit" value="Log in"/>

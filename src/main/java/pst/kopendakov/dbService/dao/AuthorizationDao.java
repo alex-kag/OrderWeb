@@ -23,32 +23,28 @@ public class AuthorizationDao {
         entityManager = HibernateUtilFactory.getEntityManager();
     }
 
-    public UserRole checkAccess(String login, String password) throws IOException {
+    public TblUserEntity checkAccess(String login, String password) throws IOException {
 
-//        Query query = session.createQuery(
-//                "select u from TblUserEntity u " +
-//                        "where u.login like :login " +
-//                        "and u.pass like :pass")
-//                .setParameter("login", login);
-        TblUserEntity user = (TblUserEntity) entityManager.createQuery(
+        TblUserEntity user = null;
+        user = (TblUserEntity) entityManager.createQuery(
                 "select u from TblUserEntity u " +
                         "where u.login like :login ")
                 .setParameter("login", login)
                 .getSingleResult();
 
-        if (null != user) {
-            String role_id = getRole(user.getTblCehEntity().getIdCeh());
-            if (login.equals(user.getLogin()) && password.equals(user.getPass())) {
-                return role_id.equalsIgnoreCase("admin") ? UserRole.admin : (role_id.equalsIgnoreCase("boss") ? UserRole.boss : UserRole.user);
-            }
-        }
-        return null;
+//        if (null != user) {
+//            String role_id = getRole(user.getTblCehEntity().getIdCeh());
+//            if (login.equals(user.getLogin()) && password.equals(user.getPass())) {
+//                return role_id.equalsIgnoreCase("admin") ? UserRole.admin : (role_id.equalsIgnoreCase("boss") ? UserRole.boss : UserRole.user);
+//            }
+
+        return user;
     }
 
-    private String getRole(Integer idCeh) {
-        String role = "";
-        switch (idCeh){
-            case 1:role ="boss";break;
+    public UserRole getRole(Integer idCeh) {
+        UserRole role =null;
+        switch (idCeh) {
+            case 1:
             case 2:
             case 3:
             case 4:
@@ -56,8 +52,15 @@ public class AuthorizationDao {
             case 6:
             case 7:
             case 8:
-            case 9:role="user";break;
-            case 999:role="admin";break;
+            case 9:
+                role = UserRole.user;
+                break;
+            case 100:
+                role = UserRole.boss;
+                break;
+            case 999:
+                role = UserRole.admin;;
+                break;
         }
         return role;
     }
@@ -72,9 +75,9 @@ public class AuthorizationDao {
                 .setParameter("login", login)
                 .getSingleResult();
 
-            if (null!=user) {
-                id = (long)user.getId();
-            }
+        if (null != user) {
+            id = (long) user.getId();
+        }
         return id;
     }
 }

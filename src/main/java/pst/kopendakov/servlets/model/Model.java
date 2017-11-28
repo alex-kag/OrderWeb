@@ -1,16 +1,16 @@
 package pst.kopendakov.servlets.model;
 
 public abstract class Model {
-    private int id;
+    private long id;
 
     public Model() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

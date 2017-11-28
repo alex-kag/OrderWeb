@@ -4,6 +4,8 @@ package pst.kopendakov.servlets.filters;
 import pst.kopendakov.servlets.controller.PageURL;
 
 import javax.servlet.*;
+import javax.servlet.annotation.ServletSecurity;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +14,7 @@ import java.io.IOException;
 /**
  * Created by proton2 on 29.10.2016.
  */
+@WebFilter("/*")
 public class AuthenticationFilter implements Filter{
 
     @Override

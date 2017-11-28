@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.SocketPermission;
 import java.util.List;
 
-public class UserDaoImpl{
+public class UserDaoImpl {
 
     private EntityManager entityManager = null;
 
@@ -22,11 +22,18 @@ public class UserDaoImpl{
                 "from TblUserEntity " )
                 .getResultList();
 
-//        for (TblUserEntity res:result) {
-//            System.out.println(String.format("login=%s; pass=%s",res.getLogin(),res.getPass()));
-//        }
-
         return result;
+    }
+
+    public TblUserEntity getUserById(long userId){
+        TblUserEntity user = null;
+        user = (TblUserEntity)entityManager.createQuery(
+                "SELECT u from TblUserEntity u " +
+                        "WHERE u.id = :id" )
+                .setParameter("id",userId)
+                .getSingleResult();
+
+        return user;
     }
 
 }
