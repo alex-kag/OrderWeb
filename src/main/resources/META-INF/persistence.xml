@@ -3,12 +3,22 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
     <persistence-unit name="pst.kopendakov.order.jpa.hibernate">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!--<jta-data-source>java:/dbOrder</jta-data-source>-->
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.connection.datasource" value="java:comp/env/jdbc/dbOrder"/>
+            <!--<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/dbOrder"/>-->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.c3p0.min_size" value="5"/>
             <property name="hibernate.current_session_context_class" value="thread"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
+            <property name="javax.persistence.jdbc.user" value="nariad" />
+            <property name="javax.persistence.jdbc.password" value="nariad" />
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nariad?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+
         </properties>
     </persistence-unit>
+
+
+
 </persistence>

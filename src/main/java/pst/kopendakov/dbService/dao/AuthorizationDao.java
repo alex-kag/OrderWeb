@@ -41,9 +41,10 @@ public class AuthorizationDao {
         return user;
     }
 
-    public UserRole getRole(Integer idCeh) {
+    public UserRole getRole(long idCeh) {
         UserRole role =null;
-        switch (idCeh) {
+
+        switch ((int)idCeh) {
             case 1:
             case 2:
             case 3:

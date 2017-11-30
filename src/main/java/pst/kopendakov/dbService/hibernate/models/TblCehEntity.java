@@ -1,25 +1,27 @@
 package pst.kopendakov.dbService.hibernate.models;
 
+import pst.kopendakov.servlets.model.Model;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "tblCeh")
-public class TblCehEntity {
+public class TblCehEntity extends Model{
 
     @Id
-    @GeneratedValue
+//    @GeneratedValue
     @Column(name = "idCeh", nullable = false)
-    private int idCeh;
+    private long idCeh;
 
     @Column(name = "CehName", nullable = false, length = 20)
     private String cehName;
 
-    public int getIdCeh() {
+    public long getIdCeh() {
         return idCeh;
     }
 
-    public void setIdCeh(int idCeh) {
+    public void setIdCeh(long idCeh) {
         this.idCeh = idCeh;
     }
 
@@ -54,23 +56,23 @@ public class TblCehEntity {
         this.tblOneRecordEntities= tblOneRecordEntities;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TblCehEntity that = (TblCehEntity) o;
-
-        if (idCeh != that.idCeh) return false;
-        if (cehName != null ? !cehName.equals(that.cehName) : that.cehName != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idCeh;
-        result = 31 * result + (cehName != null ? cehName.hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        TblCehEntity that = (TblCehEntity) o;
+//
+//        if (idCeh != that.idCeh) return false;
+//        if (cehName != null ? !cehName.equals(that.cehName) : that.cehName != null) return false;
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = idCeh;
+//        result = 31 * result + (cehName != null ? cehName.hashCode() : 0);
+//        return result;
+//    }
 }

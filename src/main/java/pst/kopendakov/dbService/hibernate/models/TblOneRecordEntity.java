@@ -1,18 +1,20 @@
 package pst.kopendakov.dbService.hibernate.models;
 
+import pst.kopendakov.servlets.model.Model;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "tblOneRecord", schema = "nariad", catalog = "")
-public class TblOneRecordEntity {
+public class TblOneRecordEntity extends Model{
 
 
     @Id
-    @GeneratedValue
+//    @GeneratedValue
     @Column(name = "IdOneRecord", nullable = false)
-    private int idOneRecord;
+    private long idOneRecord;
 
     @Column(name = "DateRec", nullable = false)
     private Date dateRec;
@@ -32,11 +34,11 @@ public class TblOneRecordEntity {
     @Column(name = "PodrCount", nullable = false)
     private int podrCount;
 
-    public int getIdOneRecord() {
+    public long getIdOneRecord() {
         return idOneRecord;
     }
 
-    public void setIdOneRecord(int idOneRecord) {
+    public void setIdOneRecord(long idOneRecord) {
         this.idOneRecord = idOneRecord;
     }
 

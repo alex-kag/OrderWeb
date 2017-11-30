@@ -13,6 +13,8 @@
         <hibernate.version>5.1.10.Final</hibernate.version>
         <c3p0.version>0.9.5.2</c3p0.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <bootstrap.version>4.0.0-beta.2</bootstrap.version>
+        <jquery.version>3.2.1</jquery.version>
     </properties>
 
     <dependencies>
@@ -67,15 +69,28 @@
             <artifactId>javax.persistence-api</artifactId>
             <version>2.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars.npm/popper.js -->
         <!--<dependency>-->
-            <!--<groupId>com.sun.faces</groupId>-->
-            <!--<artifactId>jsf-api</artifactId>-->
-            <!--<version>2.1.7</version>-->
+            <!--<groupId>org.webjars.npm</groupId>-->
+            <!--<artifactId>popper.js</artifactId>-->
+            <!--<version>1.13.0</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>com.sun.faces</groupId>-->
-            <!--<artifactId>jsf-impl</artifactId>-->
-            <!--<version>2.1.7</version>-->
+            <!--<groupId>org.webjars</groupId>-->
+            <!--<artifactId>webjars-locator</artifactId>-->
+            <!--<version>0.32</version>-->
         <!--</dependency>-->
     </dependencies>
     <build>

@@ -2,6 +2,7 @@ package pst.kopendakov.servlets.controller.Commands;
 
 
 import pst.kopendakov.dbService.dao.impl.UserDaoImpl;
+import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 import pst.kopendakov.servlets.controller.ActionCommand;
 import pst.kopendakov.servlets.controller.PageURL;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class ListUsersCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserDaoImpl userDao = new UserDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl(TblUserEntity.class);
 
         req.setAttribute("users", userDao.getAll(0,0));
         return PageURL.LIST_USER;

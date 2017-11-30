@@ -19,7 +19,6 @@
     }
 </style>
 
-
     <div class="container" style="margin-top: 80px">
         <div class="row">
             <div class="col-12">
@@ -33,13 +32,14 @@
                         <thead >
                         <tr>
                             <th scope="col" rowspan = "3" >Дата</th>
-                            <th colspan="5" style="height: 20%">Цех1</th>
+                            <th colspan="6" style="height: 20%">Цех1</th>
                         </tr>
                         <tr>
                             <th scope="col" rowspan = "2" class="vertical">Наряды</th>
                             <th scope="col" rowspan = "2" class="vertical"  >Распоряжения</th>
                             <th scope="col" rowspan = "2" class="vertical" >Численность</th>
                             <th colspan="2" style="height: 30%">Подрядные организации</th>
+                            <th colspan="2" style="height: 30%"> - </th>
                         </tr>
                         <tr>
                             <th class="vertical" style="white-space: nowrap">Форма работы<br/>(наряд./распор.)</th>
@@ -47,7 +47,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <c:out value="${orderTableRows}" escapeXml="false"/>
+                            <form class="form-inline" method="post" action="WorkTaskController" name="frmAddOrder">
+                                <input type="hidden" name="action" value="save_order">
+    <td><input type="date" name="dateRec" class="form-control" value="2017-12-30"></td>
+    <td><input type="text" name="nariad" class="form-control"></td>
+    <td><input type="text" name="raspor" class="form-control"></td>
+    <td><input type="text" name="count" class="form-control"></td>
+    <td><input type="text" name="podrForm" class="form-control"></td>
+    <td><input type="text" name="podrCount" class="form-control"></td>
+    <td><button type="submit" class="btn btn-primary">Сохранить</button></td>
+                            </form>
                         </tbody>
                     </table>
                 </div>

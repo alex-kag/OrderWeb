@@ -19,20 +19,6 @@ public class HibernateUtilFactory {
     private static EntityManagerFactory getEntityManagerFactory() {
         if (emf == null) {
 
-//            Map<String, String> properties = new HashMap<>();
-//
-//            properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-//            properties.put("hibernate.connection.datasource", "java:comp/env/jdbc/dbOrder");
-//            properties.put("hibernate.show_sql", "true");
-//            properties.put("hibernate.hbm2ddl.auto", "hibernate_hbm2ddl_auto");
-//            properties.put("hibernate.c3p0.min_size", "5");
-//            properties.put("hibernate.current_session_context_class", "thread");
-
-
-//            emf = Persistence.createEntityManagerFactory(null, properties);
-
-
-//            emf = Persistence.createEntityManagerFactory("*");
             emf = Persistence.createEntityManagerFactory( "pst.kopendakov.order.jpa.hibernate" );
         }
 

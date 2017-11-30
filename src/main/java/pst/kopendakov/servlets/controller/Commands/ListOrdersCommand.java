@@ -1,8 +1,10 @@
 package pst.kopendakov.servlets.controller.Commands;
 
 
+import pst.kopendakov.dbService.dao.impl.CehDaoImpl;
 import pst.kopendakov.dbService.dao.impl.OrdersDaoImpl;
 import pst.kopendakov.dbService.dao.impl.UserDaoImpl;
+import pst.kopendakov.dbService.hibernate.models.TblCehEntity;
 import pst.kopendakov.dbService.hibernate.models.TblOneRecordEntity;
 import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 import pst.kopendakov.servlets.controller.ActionCommand;
@@ -25,26 +27,31 @@ import java.util.List;
 public class ListOrdersCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserDaoImpl userDao = new UserDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl(TblUserEntity.class);
         HttpSession session = req.getSession(false);
         String strReturn = "";
 
         long userId = (long) session.getAttribute("user_id");
 
-        TblUserEntity user =  userDao.getUserById(userId);
+        TblUserEntity user =  userDao.getById(userId);
 
         UserRole role = (UserRole) session.getAttribute("role");
+        String strAttribute = "";
+
+
+        AddCeh();
+
 
         if (role == UserRole.user){
             strReturn = PageURL.LIST_ORDER_USER;
 //            strReturn = PageURL.LIST_ORDER_BOSS;
 
-            String strAttribute = BuildOrderSingleTable(user);
+            strAttribute = BuildOrderSingleTable(user);
         }else
         {
             strReturn = PageURL.LIST_ORDER_BOSS;
+            strAttribute = BuildOrderSingleTable(user);
         }
-        String strAttribute = BuildOrderSingleTable(user);
 
 
 
@@ -52,17 +59,35 @@ public class ListOrdersCommand implements ActionCommand {
         return strReturn;
     }
 
+    private void AddCeh() {
+        TblCehEntity tblCehEntity = new TblCehEntity();
+
+        CehDaoImpl cehDao = new CehDaoImpl(TblCehEntity.class);
+
+        tblCehEntity.setCehName("хреновый цех1");
+//        tblCehEntity.setIdCeh(200);
+
+
+        try {
+            cehDao.insert(tblCehEntity);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     private String BuildOrderSingleTable(TblUserEntity user) throws IOException {
         String retOrderTable = "";
         StringBuilder  my = new StringBuilder("");
 
-        OrdersDaoImpl ordersDao = new OrdersDaoImpl();
+        OrdersDaoImpl ordersDao = new OrdersDaoImpl(TblOneRecordEntity.class);
 
 
         //эта дикая конструкция получает текущее время
 ////        java.util.Date jutilDate = new java.util.Date();
 ////        java.sql.Date jsqlDate = new Date(new java.util.Date().getTime());
-        List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getAll(new Date(new java.util.Date().getTime()), user.getTblCehEntity());
+        List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getOneCehAll(new Date(new java.util.Date().getTime()), user.getTblCehEntity());
 
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 //        String text = df.format(date);
