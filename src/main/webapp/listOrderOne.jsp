@@ -33,7 +33,7 @@
                         <thead >
                         <tr>
                             <th scope="col" rowspan = "3" >Дата</th>
-                            <th colspan="5" style="height: 20%">Цех1</th>
+                            <th colspan="5" style="height: 20%"><c:out value="${userCeh}" /></th>
                         </tr>
                         <tr>
                             <th scope="col" rowspan = "2" class="vertical">Наряды</th>
@@ -47,7 +47,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <c:out value="${orderTableRows}" escapeXml="false"/>
+                            <%--<c:out value="${orderTableRows}" escapeXml="false"/>--%>
+                            <c:forEach items="${listRecords}" var = "oneRecord">
+                                <tr>
+                                    <td><c:out value="${oneRecord.dateRec}"/></td>
+                                    <td><c:out value="${oneRecord.nariad}"/></td>
+                                    <td><c:out value="${oneRecord.raspor}"/></td>
+                                    <td><c:out value="${oneRecord.count}"/></td>
+                                    <td><c:out value="${oneRecord.podrForm}"/></td>
+                                    <td><c:out value="${oneRecord.podrCount}"/></td>
+        <%--<td><fmt:formatDate pattern="yyyy-MMM-dd" value="${workTask.taskDate}" /></td>--%>
+        <%--<td><fmt:formatDate pattern="yyyy-MMM-dd" value="${workTask.deadLine}" /></td>--%>
+        <td><a href = "WorkTaskController?action=edit_order&id=<c:out value = "${oneRecord.idOneRecord}"/>">Редактировать</a></td>
+                                </tr>
+                            </c:forEach>
+
                         </tbody>
                     </table>
                 </div>

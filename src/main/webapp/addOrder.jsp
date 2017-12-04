@@ -48,13 +48,14 @@
                         </thead>
                         <tbody>
                             <form class="form-inline" method="post" action="WorkTaskController" name="frmAddOrder">
-                                <input type="hidden" name="action" value="save_order">
-    <td><input type="date" name="dateRec" class="form-control" value="2017-12-30"></td>
-    <td><input type="text" name="nariad" class="form-control"></td>
-    <td><input type="text" name="raspor" class="form-control"></td>
-    <td><input type="text" name="count" class="form-control"></td>
-    <td><input type="text" name="podrForm" class="form-control"></td>
-    <td><input type="text" name="podrCount" class="form-control"></td>
+    <input type="hidden" name="action" value="save_order">
+    <input type="hidden" name="id" value="<c:out value="${tblOneRecord.idOneRecord}"/>">
+    <td><input type="date" name="dateRec" class="form-control" value="<c:out value="${tblOneRecord.dateRec}"/>"></td>
+    <td><input type="text" name="nariad" class="form-control"  value="<c:out value="${tblOneRecord.nariad}"/>"></td>
+    <td><input type="text" name="raspor" class="form-control"  value="<c:out value="${tblOneRecord.raspor}"/>"></td>
+    <td><input type="text" name="count" class="form-control" value="<c:out value="${tblOneRecord.count}"/>"></td>
+    <td><input type="text" name="podrForm" class="form-control" value="<c:out value="${tblOneRecord.podrForm}"/>"></td>
+    <td><input type="text" name="podrCount" class="form-control" value="<c:out value="${tblOneRecord.podrCount}"/>"></td>
     <td><button type="submit" class="btn btn-primary">Сохранить</button></td>
                             </form>
                         </tbody>

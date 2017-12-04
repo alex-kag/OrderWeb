@@ -1,14 +1,10 @@
 package pst.kopendakov.dbService.dao.impl;
 
 
-import pst.kopendakov.dbService.dao.AbstractDao;
+import pst.kopendakov.dbService.dao.abstractClasses.AbstractDao;
 import pst.kopendakov.servlets.model.WorkTaskView;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 /**

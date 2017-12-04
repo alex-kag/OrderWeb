@@ -1,4 +1,4 @@
-package pst.kopendakov.dbService.dao;
+package pst.kopendakov.dbService.dao.abstractClasses;
 
 
 

@@ -27,7 +27,7 @@
 <nav class="navbar navbar-expand-md bg-primary navbar-dark">
     <div class="container">
         <%--ToDo: изменить на правильную ссылку--%>
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="">
             <i class="fa d-inline fa-lg fa-cloud"></i>
             <b>  Полоцкая ТЭЦ, заявки</b>
         </a>

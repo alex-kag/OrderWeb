@@ -20,7 +20,10 @@ public interface PageURL {
     String LIST_USER_ACTION = "/WorkTaskController?action=list_users";
     String LIST_USER = "/listUser.jsp";
     String LIST_ORDER_ACTION = "/WorkTaskController?action=list_orders";
+    String ADD_ORDER_ACTION = "/WorkTaskController?action=add_order";
     String LIST_ORDER_USER = "/listOrderOne.jsp";
     String LIST_ORDER_BOSS = "/listOrderAll.jsp";
+    String EDIT_ORDERRECORD = "/addOrder.jsp";
+
 
 }

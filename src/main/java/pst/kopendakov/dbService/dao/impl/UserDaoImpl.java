@@ -1,6 +1,6 @@
 package pst.kopendakov.dbService.dao.impl;
 
-import pst.kopendakov.dbService.dao.AbstractDao;
+import pst.kopendakov.dbService.dao.abstractClasses.AbstractDao;
 import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 
 import javax.persistence.EntityManager;

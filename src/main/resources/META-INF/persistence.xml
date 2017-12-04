@@ -14,8 +14,10 @@
             <property name="javax.persistence.jdbc.user" value="nariad" />
             <property name="javax.persistence.jdbc.password" value="nariad" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nariad?useUnicode=yes&amp;characterEncoding=UTF-8"/>
-
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nariad?useUnicode=yes&amp;characterEncoding=UTF-8"/>-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/nariad"/>
+            <property name="hibernate.connection.useUnicode" value="true"/>
+            <property name="hibernate.connection.characterEncoding" value="UTF-8"/>
         </properties>
     </persistence-unit>
 

@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -39,18 +40,21 @@ public class ListOrdersCommand implements ActionCommand {
         String strAttribute = "";
 
 
-        AddCeh();
+//      AddCeh();
 
 
         if (role == UserRole.user){
             strReturn = PageURL.LIST_ORDER_USER;
 //            strReturn = PageURL.LIST_ORDER_BOSS;
 
-            strAttribute = BuildOrderSingleTable(user);
+//            strAttribute =
+            BuildOrderSingleTable(user,req);
         }else
         {
             strReturn = PageURL.LIST_ORDER_BOSS;
-            strAttribute = BuildOrderSingleTable(user);
+//            strAttribute =
+
+            BuildOrderSingleTable(user,req);
         }
 
 
@@ -77,7 +81,7 @@ public class ListOrdersCommand implements ActionCommand {
 
     }
 
-    private String BuildOrderSingleTable(TblUserEntity user) throws IOException {
+    private void BuildOrderSingleTable(TblUserEntity user, HttpServletRequest req) throws IOException {
         String retOrderTable = "";
         StringBuilder  my = new StringBuilder("");
 
@@ -90,24 +94,72 @@ public class ListOrdersCommand implements ActionCommand {
         List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getOneCehAll(new Date(new java.util.Date().getTime()), user.getTblCehEntity());
 
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DATE,1);
+
 //        String text = df.format(date);
 
+        ArrayList<TblOneRecordEntity> recordEntities = new ArrayList<>();
+
+        recordEntities.add(tblOneRecordEntity.get(0));
+
+        TblOneRecordEntity tempRecord = reFillTempRecord(user);
+//                new TblOneRecordEntity();
+//        tempRecord.setTblCehEntity(user.getTblCehEntity());
+//        tempRecord.setNariad(0);
+//        tempRecord.setRaspor(0);
+//        tempRecord.setCount(0);
+//        tempRecord.setPodrForm(0);
+//        tempRecord.setPodrCount(0);
+//        tempRecord.setIdOneRecord(-1);
+
+
         for(TblOneRecordEntity oneRecordEntity :tblOneRecordEntity){
-            my.append("<tr><td>");
-//            String strData = oneRecordEntity.getDateRec().toString().fo;
-            my.append(df.format(oneRecordEntity.getDateRec()));
-            my.append("</td><td>");
-            my.append(oneRecordEntity.getNariad());
-            my.append("</td><td>");
-            my.append(oneRecordEntity.getRaspor());
-            my.append("</td><td>");
-            my.append(oneRecordEntity.getCount());
-            my.append("</td><td>");
-            my.append(oneRecordEntity.getPodrForm());
-            my.append("</td><td>");
-            my.append(oneRecordEntity.getPodrCount());
-            my.append("</td></tr>\n");
+
+            cal.setTime(recordEntities.get(recordEntities.size()-1).getDateRec());
+            cal.add(cal.DATE,-1);
+
+            while (cal.getTime().getTime() > oneRecordEntity.getDateRec().getTime()){
+                cal.setTime(recordEntities.get(recordEntities.size()-1).getDateRec());
+                cal.add(cal.DATE,-1);
+                tempRecord = reFillTempRecord(user);
+                tempRecord.setDateRec(new Date(cal.getTime().getTime()));
+                recordEntities.add(tempRecord);
+                cal.add(cal.DATE,-1);
+            }
+
+            if (recordEntities.get(recordEntities.size()-1).getDateRec().getTime() !=
+                    oneRecordEntity.getDateRec().getTime()){
+                recordEntities.add(oneRecordEntity);
+            }
+
         }
+
+        req.setAttribute("listRecords",recordEntities);
+
+
+
+//        for(TblOneRecordEntity oneRecordEntity :tblOneRecordEntity){
+//            my.append("<tr><td>");
+////            String strData = oneRecordEntity.getDateRec().toString().fo;
+//            my.append(df.format(oneRecordEntity.getDateRec()));
+//            my.append("</td><td>");
+//            my.append(oneRecordEntity.getNariad());
+//            my.append("</td><td>");
+//            my.append(oneRecordEntity.getRaspor());
+//            my.append("</td><td>");
+//            my.append(oneRecordEntity.getCount());
+//            my.append("</td><td>");
+//            my.append(oneRecordEntity.getPodrForm());
+//            my.append("</td><td>");
+//            my.append(oneRecordEntity.getPodrCount());
+//            my.append("</td><td>");
+//            my.append("<a href = \"");
+//            my.append("WorkTaskController?action=edit_order&id=");
+//            my.append(oneRecordEntity.getIdOneRecord());
+//            my.append("\">Редактировать</a>");
+//            my.append("</td></tr>\n");
+//        }
 
 //        List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getAll(0,0);
 
@@ -116,6 +168,19 @@ public class ListOrdersCommand implements ActionCommand {
 //        tblOneRecordEntity.addAll(user.getTblCehEntity().getTblOneRecordEntities());
 
                 //(List<TblOneRecordEntity>) user.getTblCehEntity().getTblOneRecordEntities();
-        return my.toString();
+//        return my.toString();
+    }
+
+    private TblOneRecordEntity reFillTempRecord(TblUserEntity user) {
+        TblOneRecordEntity tempRecord = new TblOneRecordEntity();
+        tempRecord.setTblCehEntity(user.getTblCehEntity());
+        tempRecord.setNariad(0);
+        tempRecord.setRaspor(0);
+        tempRecord.setCount(0);
+        tempRecord.setPodrForm(0);
+        tempRecord.setPodrCount(0);
+        tempRecord.setIdOneRecord(-1);
+
+        return tempRecord;
     }
 }

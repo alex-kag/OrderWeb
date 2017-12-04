@@ -24,6 +24,17 @@ public class TblUserEntity extends Model {
     @Column(name = "soll", nullable = false, length = 50)
     private String soll;
 
+    @Column(name = "status", nullable = false)
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @ManyToOne
     @JoinColumn(name = "idCeh")
     private TblCehEntity tblCehEntity;

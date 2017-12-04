@@ -1,14 +1,12 @@
-package pst.kopendakov.dbService.dao;
+package pst.kopendakov.dbService.dao.abstractClasses;
 
 
+import pst.kopendakov.dbService.dao.abstractClasses.Dao;
 import pst.kopendakov.dbService.hibernate.HibernateUtilFactory;
-import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 import pst.kopendakov.servlets.model.Model;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import java.io.IOException;
-import java.sql.*;
 import java.util.List;
 
 /**
@@ -68,7 +66,9 @@ public class AbstractDao<T extends Model> implements Dao<T> {
 
     @Override
     public void update(T entity) throws IOException {
+        entityManager.getTransaction().begin();
         entityManager.persist(entity);
+        entityManager.getTransaction().commit();
     }
 
     @Override

@@ -6,6 +6,7 @@ import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 import pst.kopendakov.servlets.model.UserRole;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,17 +27,19 @@ public class AuthorizationDao {
     public TblUserEntity checkAccess(String login, String password) throws IOException {
 
         TblUserEntity user = null;
+        try {
+
         user = (TblUserEntity) entityManager.createQuery(
                 "select u from TblUserEntity u " +
-                        "where u.login like :login ")
+                        "where u.login like :login and " +
+                        "u.pass like :password ")
                 .setParameter("login", login)
+                .setParameter("password", password)
                 .getSingleResult();
+        }
+        catch (NoResultException e){
 
-//        if (null != user) {
-//            String role_id = getRole(user.getTblCehEntity().getIdCeh());
-//            if (login.equals(user.getLogin()) && password.equals(user.getPass())) {
-//                return role_id.equalsIgnoreCase("admin") ? UserRole.admin : (role_id.equalsIgnoreCase("boss") ? UserRole.boss : UserRole.user);
-//            }
+        }
 
         return user;
     }

@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by proton2 on 29.10.2016.
  */
-@WebFilter("/*")
+@WebFilter(urlPatterns = "/*" )
 public class AuthenticationFilter implements Filter{
 
     @Override
@@ -27,6 +27,13 @@ public class AuthenticationFilter implements Filter{
 
         String uri = req.getRequestURI();
         HttpSession session = req.getSession(false);
+
+        //делаем пропуск нужных нам ресурсов мимо фильтра
+        if (uri.contains("/site/js/")||
+                uri.contains("/webjars/")){
+            chain.doFilter(req,resp);
+        }
+
         if((session == null || session.getAttribute("role") == null) && !(uri.endsWith("jsp") || uri.endsWith("LoginServlet"))){
             RequestDispatcher view = request.getRequestDispatcher(PageURL.LOGIN_ACTION);
             view.forward(request, response);

@@ -24,6 +24,13 @@ public enum CommandEnum {
     SAVE_ORDER {{
         this.command = new SaveOrderCommand();
     }},
+    ADD_ORDER {{
+        this.command = new AddOrderCommand();
+    }},
+    EDIT_ORDER {{
+        this.command = new EditOrderCommand();
+    }},
+
 
 //    DELETE_WORKTASK {{
 //        this.command = new DeleteWorkTaskCommand();
