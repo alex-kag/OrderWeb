@@ -9,6 +9,7 @@ import pst.kopendakov.dbService.hibernate.models.TblOneRecordEntity;
 import pst.kopendakov.dbService.hibernate.models.TblUserEntity;
 import pst.kopendakov.servlets.controller.ActionCommand;
 import pst.kopendakov.servlets.controller.PageURL;
+import pst.kopendakov.servlets.model.RecordLevel2;
 import pst.kopendakov.servlets.model.UserRole;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,22 +40,14 @@ public class ListOrdersCommand implements ActionCommand {
         UserRole role = (UserRole) session.getAttribute("role");
         String strAttribute = "";
 
-
-//      AddCeh();
-
-
         if (role == UserRole.user){
             strReturn = PageURL.LIST_ORDER_USER;
-//            strReturn = PageURL.LIST_ORDER_BOSS;
-
-//            strAttribute =
             BuildOrderSingleTable(user,req);
         }else
         {
             strReturn = PageURL.LIST_ORDER_BOSS;
-//            strAttribute =
 
-            BuildOrderSingleTable(user,req);
+            BuildOrderBossTable(user,req);
         }
 
 
@@ -63,55 +56,45 @@ public class ListOrdersCommand implements ActionCommand {
         return strReturn;
     }
 
-    private void AddCeh() {
-        TblCehEntity tblCehEntity = new TblCehEntity();
+    //генерация полной таблицы
+    private void BuildOrderBossTable(TblUserEntity user, HttpServletRequest req)  throws IOException {
+        OrdersDaoImpl ordersDao = new OrdersDaoImpl(TblOneRecordEntity.class);
+        Date firstDate = new Date(new java.util.Date().getTime());
+        List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getBossAll(firstDate);
 
-        CehDaoImpl cehDao = new CehDaoImpl(TblCehEntity.class);
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        Calendar cal = Calendar.getInstance();
 
-        tblCehEntity.setCehName("хреновый цех1");
-//        tblCehEntity.setIdCeh(200);
+        ArrayList<TblOneRecordEntity> recordLevel1 = new ArrayList<>();
+//        ArrayList<RecordLevel2>
 
 
-        try {
-            cehDao.insert(tblCehEntity);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
     }
 
+    //генерация списка для одного единственного пользователя
     private void BuildOrderSingleTable(TblUserEntity user, HttpServletRequest req) throws IOException {
-        String retOrderTable = "";
-        StringBuilder  my = new StringBuilder("");
 
         OrdersDaoImpl ordersDao = new OrdersDaoImpl(TblOneRecordEntity.class);
-
 
         //эта дикая конструкция получает текущее время
 ////        java.util.Date jutilDate = new java.util.Date();
 ////        java.sql.Date jsqlDate = new Date(new java.util.Date().getTime());
-        List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getOneCehAll(new Date(new java.util.Date().getTime()), user.getTblCehEntity());
+
+        //текущая дата (на самом деле надо брать около нее, а не точно нее)
+        Date firstDate = new Date(new java.util.Date().getTime());
+
+        List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getOneCehAll(firstDate, user.getTblCehEntity());
 
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         Calendar cal = Calendar.getInstance();
-//        cal.add(Calendar.DATE,1);
-
-//        String text = df.format(date);
 
         ArrayList<TblOneRecordEntity> recordEntities = new ArrayList<>();
 
         recordEntities.add(tblOneRecordEntity.get(0));
 
         TblOneRecordEntity tempRecord = reFillTempRecord(user);
-//                new TblOneRecordEntity();
-//        tempRecord.setTblCehEntity(user.getTblCehEntity());
-//        tempRecord.setNariad(0);
-//        tempRecord.setRaspor(0);
-//        tempRecord.setCount(0);
-//        tempRecord.setPodrForm(0);
-//        tempRecord.setPodrCount(0);
-//        tempRecord.setIdOneRecord(-1);
 
 
         for(TblOneRecordEntity oneRecordEntity :tblOneRecordEntity){
@@ -136,39 +119,6 @@ public class ListOrdersCommand implements ActionCommand {
         }
 
         req.setAttribute("listRecords",recordEntities);
-
-
-
-//        for(TblOneRecordEntity oneRecordEntity :tblOneRecordEntity){
-//            my.append("<tr><td>");
-////            String strData = oneRecordEntity.getDateRec().toString().fo;
-//            my.append(df.format(oneRecordEntity.getDateRec()));
-//            my.append("</td><td>");
-//            my.append(oneRecordEntity.getNariad());
-//            my.append("</td><td>");
-//            my.append(oneRecordEntity.getRaspor());
-//            my.append("</td><td>");
-//            my.append(oneRecordEntity.getCount());
-//            my.append("</td><td>");
-//            my.append(oneRecordEntity.getPodrForm());
-//            my.append("</td><td>");
-//            my.append(oneRecordEntity.getPodrCount());
-//            my.append("</td><td>");
-//            my.append("<a href = \"");
-//            my.append("WorkTaskController?action=edit_order&id=");
-//            my.append(oneRecordEntity.getIdOneRecord());
-//            my.append("\">Редактировать</a>");
-//            my.append("</td></tr>\n");
-//        }
-
-//        List<TblOneRecordEntity> tblOneRecordEntity = ordersDao.getAll(0,0);
-
-
-        //        List<TblOneRecordEntity> tblOneRecordEntity = new ArrayList<>();
-//        tblOneRecordEntity.addAll(user.getTblCehEntity().getTblOneRecordEntities());
-
-                //(List<TblOneRecordEntity>) user.getTblCehEntity().getTblOneRecordEntities();
-//        return my.toString();
     }
 
     private TblOneRecordEntity reFillTempRecord(TblUserEntity user) {

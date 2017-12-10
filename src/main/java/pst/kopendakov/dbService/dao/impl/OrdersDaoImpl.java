@@ -18,15 +18,6 @@ public class OrdersDaoImpl extends AbstractDao<TblOneRecordEntity>{
         entityManager = getEntityManager();
     }
 
-//    public List<TblOneRecordEntity> getAll(int offcet, int limit) throws IOException {
-//        List<TblOneRecordEntity> result = entityManager.createQuery(
-//                "from TblOneRecordEntity " +
-//                        "order by dateRec desc , tblCehEntity.id asc " )
-//                .getResultList();
-//
-//        return result;
-//    }
-
     public List<TblOneRecordEntity> getOneCehAll(Date data, TblCehEntity tblCehEntity) throws IOException {
         List<TblOneRecordEntity> result = entityManager.createQuery(
                 "SELECT o from TblOneRecordEntity o " +
@@ -38,15 +29,14 @@ public class OrdersDaoImpl extends AbstractDao<TblOneRecordEntity>{
         return result;
     }
 
-//    public TblOneRecordEntity getOrderById(long orderId){
-//        TblOneRecordEntity order = null;
-//        order = (TblOneRecordEntity) entityManager.createQuery(
-//                "SELECT o from TblOneRecordEntity o " +
-//                        "WHERE o.id = :id" )
-//                .setParameter("id",orderId)
-//                .getSingleResult();
-//
-//        return order;
-//    }
+    public List<TblOneRecordEntity> getBossAll(Date data ) throws IOException {
+        List<TblOneRecordEntity> result = entityManager.createQuery(
+                "SELECT o from TblOneRecordEntity o " +
+                        "WHERE o.tblCehEntity = :ceh " +
+                        "order by o.dateRec desc " +
+                        ", o.tblCehEntity.idCeh asc")
+                .getResultList();
 
+        return result;
+    }
 }
